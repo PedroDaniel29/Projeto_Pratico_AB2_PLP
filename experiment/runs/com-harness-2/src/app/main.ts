@@ -1,5 +1,15 @@
-import { EMPTY, Subscription, asyncScheduler, defer, from, type SchedulerLike, timer } from 'rxjs';
-import { catchError, mergeMap, retry } from 'rxjs/operators';
+import {
+  EMPTY,
+  Subscription,
+  asyncScheduler,
+  catchError,
+  defer,
+  from,
+  mergeMap,
+  retry,
+  timer,
+  type SchedulerLike,
+} from 'rxjs';
 import type { AlertRaised } from '../domain/events';
 import { EventBus } from '../infra/event-bus';
 import { createAlertStream } from '../streams/alert-stream';

@@ -1,0 +1,12 @@
+{
+  "label": "com-harness-3",
+  "target": "C:\\Users\\Nelson\\Documents\\reactive-harness\\with-harness",
+  "measuredAt": "2026-11-25T20:08:28.902Z",
+  "typeErrors": 0,
+  "lintErrors": 0,
+  "rxjsViolations": 0,
+  "architecturalViolations": 0,
+  "testsTotal": 7,
+  "testsFailed": 0,
+  "hasTests": true
+}
