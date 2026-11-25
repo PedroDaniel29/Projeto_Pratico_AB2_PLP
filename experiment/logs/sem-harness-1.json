@@ -1,0 +1,12 @@
+{
+  "label": "sem-harness-1",
+  "target": "C:\\Users\\Nelson\\Documents\\reactive-harness\\without-harness",
+  "measuredAt": "2026-11-25T20:20:54.165Z",
+  "typeErrors": 0,
+  "lintErrors": 4,
+  "rxjsViolations": 0,
+  "architecturalViolations": 0,
+  "testsTotal": 4,
+  "testsFailed": 0,
+  "hasTests": true
+}
