@@ -24,13 +24,13 @@ const work = mkdtempSync(join(tmpdir(), 'measure-'));
 for (const f of ['package.json', 'tsconfig.json', 'vitest.config.ts', 'eslint.config.js', '.dependency-cruiser.cjs']) {
   cpSync(join(harness, f), join(work, f));
 }
-symlinkSync(join(harness, 'node_modules'), join(work, 'node_modules'));
+symlinkSync(join(harness, 'node_modules'), join(work, 'node_modules'), 'junction');
 for (const d of ['src', 'tests']) {
   mkdirSync(join(work, d), { recursive: true });
   if (existsSync(join(source, d))) cpSync(join(source, d), join(work, d), { recursive: true });
 }
 
-const run = (cmd, args) => spawnSync(cmd, args, { cwd: work, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+const run = (cmd, args) => spawnSync(cmd, args, { cwd: work, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, shell: true });
 const parse = (text) => { try { return JSON.parse(text); } catch { return null; } };
 
 // 1) TypeScript
