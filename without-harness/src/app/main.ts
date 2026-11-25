@@ -85,7 +85,10 @@ export function startMonitor({
                 count: MAX_RETRIES,
                 delay: () => timer(RETRY_DELAY_MS, scheduler),
               }),
-              catchError(() => EMPTY),
+              catchError((error: unknown) => {
+                console.error('Alert delivery failed after 3 attempts', error);
+                return EMPTY;
+              }),
             );
           }),
         );
