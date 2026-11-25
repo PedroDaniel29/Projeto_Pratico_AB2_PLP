@@ -2,7 +2,7 @@
 
 Trabalho de **Paradigmas de Linguagem de Programação**. Compara a implementação da mesma funcionalidade por um agente de IA **com** e **sem** um *harness* (instruções, regras arquiteturais, lint, testes e scripts de validação), medindo erros, violações arquiteturais e intervenções humanas.
 
-**Autor(es):** _preencher_  
+**Autor(es):** Pedro Daniel  
 **Vídeo:** _link_
 
 ## A funcionalidade
