@@ -3,7 +3,7 @@
 Trabalho de **Paradigmas de Linguagem de Programação**. Compara a implementação da mesma funcionalidade por um agente de IA **com** e **sem** um *harness* (instruções, regras arquiteturais, lint, testes e scripts de validação), medindo erros, violações arquiteturais e intervenções humanas.
 
 **Autor(es):** Pedro Daniel  
-**Vídeo:** _link_
+**Vídeo:** https://youtu.be/waeLpN_IRhI?si=nP8lZH1aicJvkepa
 
 ## A funcionalidade
 Monitor de sensores orientado a eventos: leituras entram por um `EventBus`, são agrupadas por sensor, janeladas no tempo, e geram alertas quando a média passa de um limiar, com reenvio resiliente (`retry`) e encerramento limpo. Prompt completo em [`experiment/prompt.md`](experiment/prompt.md).
