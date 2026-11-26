@@ -45,9 +45,33 @@ cd ../without-harness && npm install
 5. Repita 3 vezes por versão (limpe a pasta `src/` entre rodadas: `git checkout -- . && git clean -fd`) e preencha `experiment/metrics.md`.
 
 ## Resultados
-_Preencher com a tabela final de `experiment/metrics.md` e a análise._
 
-## Limitações
-- Poucas rodadas por versão (variabilidade do agente).
-- O harness não valida a **lógica** do alerta, só estrutura e estilo, a menos que os testes cubram.
-- Intervenções humanas são contadas manualmente.
+### Tabela comparativa
+
+| Rodada | Versão | Erros de tipo | Erros de lint | Violações RxJS | Violações arquiteturais | Testes (falhos/total) | Intervenções humanas | Iterações validate→correção | Tempo (min) |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 1 | sem harness | 0 | 4 | 0 | 0 | 0/4 | 0 | n/a | ~15 |
+| 2 | sem harness | 0 | 5 | 0 | 0 | 0/4 | 0 | n/a | ~10 |
+| 3 | sem harness | 0 | 5 | 0 | 0 | 0/4 | 0 | n/a | ~6 |
+| 1 | com harness | 0 | 0 | 0 | 0 | 0/6 | 0 | ~2 | ~20 |
+| 2 | com harness | 0 | 0 | 0 | 0 | 0/7 | 0 | ~1 | ~25 |
+| 3 | com harness | 0 | 0 | 0 | 0 | 0/7 | 0 | ~2 | ~15 |
+
+### Médias
+
+| Versão | Erros tipo | Lint | RxJS | Arquit. | Testes falhos | Intervenções |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **sem harness** | 0 | 4.67 | 0 | 0 | 0 | 0 |
+| **com harness** | 0 | 0 | 0 | 0 | 0 | 0 |
+
+### Análise qualitativa
+
+**Redução drástica de erros de lint.** A diferença mais evidente foi a qualidade do código gerado. Sem o harness, o agente produziu uma média de **4,67 erros de lint** por rodada — o código compilava, mas ignorava padrões de clean code. Com o harness ativo, a média caiu para **zero**. O `AGENTS.md` e os scripts de validação forçam o agente a entrar em um ciclo de autocorreção: ele roda o `npm run validate`, vê o erro de lint e conserta antes de entregar o resultado.
+
+**Cobertura de testes.** A presença do harness também alterou a postura do agente em relação aos testes. Na pasta `without-harness`, o agente se limitou ao mínimo (4 testes em todas as rodadas). Já na pasta `with-harness`, ele criou entre 6 e 7 testes. Em um paradigma orientado a eventos, onde fluxos assíncronos são difíceis de depurar visualmente, a garantia de testes é vital para evitar vazamentos de memória (subscriptions não fechadas) e falhas silenciosas.
+
+**Violações arquiteturais e RxJS.** Ambas as abordagens apresentaram **0 violações arquiteturais** e **0 violações de RxJS**. Isso indica que o agente possui um conhecimento nativo forte sobre a biblioteca RxJS e sobre a arquitetura proposta, acertando a estrutura mesmo "às cegas". A diferença sutil está na **manutenibilidade**: o código sem harness pode até ter a estrutura correta, mas os erros de lint mostram que ele carece de padronização e legibilidade.
+
+**O que o harness não pegou?** O harness garante qualidade sintática (tipos, lint, arquitetura), mas não garante a **regra de negócio**. A lógica matemática da média móvel ou o tempo exato de debounce do alerta podem ter sido implementados de forma incorreta, pois isso exigiria testes de integração com tempo simulado (fake timers) mais complexos, que não estavam no escopo do `validate` básico.
+
+**O agente tentou burlar o harness?** Não foram encontrados `@ts-ignore` ou diretivas `eslint-disable` nos arquivos finais. O agente corrigiu o código de forma legítima (ajustando a tipagem e o padrão de importação) em vez de tentar silenciar o linter.
